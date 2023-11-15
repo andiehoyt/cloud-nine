@@ -12,35 +12,49 @@ function displayGrid(result) {
     const gridContainer = document.getElementById('grid-container');
     let currentStrand = '';
     let currentTopic = '';
-    let topicDiv, list;
+    let topicDiv, list, strandContent;
 
     data.forEach(row => {
         // Check if the strand has changed
         if (row.Strand !== currentStrand) {
             currentStrand = row.Strand;
             const strandHeader = document.createElement('h2');
-            strandHeader.className = 'strand-header';
+            strandHeader.className = 'strand-header collapsible';
             strandHeader.textContent = currentStrand;
-            strandHeader.addEventListener('click', toggleVisibility);
+
+            strandContent = document.createElement('div');
+            strandContent.className = 'content'; 
+
+            strandHeader.addEventListener('click', function() {
+                this.classList.toggle("active");
+                strandContent.style.display = strandContent.style.display === 'none' ? '' : 'none';
+            });
+
             gridContainer.appendChild(strandHeader);
+            gridContainer.appendChild(strandContent);
         }
 
         // Check if the topic has changed
         if (row.topic_title !== currentTopic) {
             currentTopic = row.topic_title;
             topicDiv = document.createElement('div');
-            topicDiv.className = 'topic-container';
-            const topicHeader = document.createElement('h3');
-            topicHeader.className = 'topic-subheader';
-            topicHeader.textContent = currentTopic;
-            topicHeader.addEventListener('click', toggleVisibility);
-            topicDiv.appendChild(topicHeader);
+            topicDiv.className = 'topic-container content';
 
-            // Create a new list for the subtopics
+            const topicHeader = document.createElement('h3');
+            topicHeader.className = 'topic-subheader collapsible';
+            topicHeader.textContent = currentTopic;
+
             list = document.createElement('ul');
             list.className = 'subtopic-list';
+
+            topicHeader.addEventListener('click', function() {
+                this.classList.toggle("active");
+                list.style.display = list.style.display === 'none' ? '' : 'none';
+            });
+
+            topicDiv.appendChild(topicHeader);
             topicDiv.appendChild(list);
-            gridContainer.appendChild(topicDiv);
+            strandContent.appendChild(topicDiv);
         }
 
         // Add subtopic as a list item
@@ -49,14 +63,4 @@ function displayGrid(result) {
         listItem.textContent = row.subtopic_title;
         list.appendChild(listItem);
     });
-}
-
-function toggleVisibility(event) {
-    const header = event.target;
-    const content = header.nextElementSibling;
-    if (content.style.display === 'none') {
-        content.style.display = '';
-    } else {
-        content.style.display = 'none';
-    }
 }
