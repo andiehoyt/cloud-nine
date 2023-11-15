@@ -44,6 +44,18 @@
 
 .strand-header, .topic-subheader {
     cursor: pointer;
+    background-color: #FFFFFF; /* White background */
+    color: #3E3E4C; /* Grey text */
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Proxima Nova', sans-serif;
+    font-weight: 600; /* Semibold */
+    border-radius: 8px; /* Rounded corners */
   }
   
   .topic-container, .subtopic-list {
