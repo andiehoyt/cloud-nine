@@ -21,6 +21,7 @@ function displayGrid(result) {
             const strandHeader = document.createElement('h2');
             strandHeader.className = 'strand-header';
             strandHeader.textContent = currentStrand;
+            strandHeader.addEventListener('click', toggleVisibility);
             gridContainer.appendChild(strandHeader);
         }
 
@@ -28,13 +29,16 @@ function displayGrid(result) {
         if (row.topic_title !== currentTopic) {
             currentTopic = row.topic_title;
             topicDiv = document.createElement('div');
+            topicDiv.className = 'topic-container';
             const topicHeader = document.createElement('h3');
             topicHeader.className = 'topic-subheader';
             topicHeader.textContent = currentTopic;
+            topicHeader.addEventListener('click', toggleVisibility);
             topicDiv.appendChild(topicHeader);
 
             // Create a new list for the subtopics
             list = document.createElement('ul');
+            list.className = 'subtopic-list';
             topicDiv.appendChild(list);
             gridContainer.appendChild(topicDiv);
         }
@@ -45,4 +49,14 @@ function displayGrid(result) {
         listItem.textContent = row.subtopic_title;
         list.appendChild(listItem);
     });
+}
+
+function toggleVisibility(event) {
+    const header = event.target;
+    const content = header.nextElementSibling;
+    if (content.style.display === 'none') {
+        content.style.display = '';
+    } else {
+        content.style.display = 'none';
+    }
 }
