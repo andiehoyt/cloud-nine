@@ -24,8 +24,6 @@
 }
 
 .content {
-    display: none;
-    overflow: hidden;
     background-color: #FDF0D5; /* Tan background */
     border-radius: 8px; /* Rounded corners */
     padding: 0 18px;
