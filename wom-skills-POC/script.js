@@ -11,9 +11,7 @@ function displayGrid(result) {
     const data = result.data;
     const gridContainer = document.getElementById('grid-container');
     let currentStrand = '';
-    let currentTopic = '';
-    let topicDiv, list;
-    let topicCounter = 0;
+    let currentTopicId = 0;
 
     data.forEach(row => {
         if (row.Strand !== currentStrand) {
@@ -21,6 +19,7 @@ function displayGrid(result) {
             const strandHeader = document.createElement('h2');
             strandHeader.className = 'strand-header collapsible';
             strandHeader.textContent = currentStrand;
+
             const strandContent = document.createElement('div');
             strandContent.className = 'content';
 
@@ -32,21 +31,21 @@ function displayGrid(result) {
             gridContainer.appendChild(strandContent);
         }
 
-        if (row.topic_title !== currentTopic) {
-            currentTopic = row.topic_title;
-            topicCounter++;
-            topicDiv = document.createElement('div');
+        if (row.topic_id !== currentTopicId) {
+            currentTopicId = row.topic_id;
+            const topicDiv = document.createElement('div');
             topicDiv.className = 'topic-container content';
+
             const topicHeader = document.createElement('h3');
             topicHeader.className = 'topic-subheader collapsible';
-            topicHeader.textContent = currentTopic;
+            topicHeader.textContent = row.topic_title;
+            topicHeader.setAttribute('data-topic', currentTopicId);
 
-            list = document.createElement('ul');
+            const list = document.createElement('ul');
             list.className = 'subtopic-list';
-            list.setAttribute('data-topic', topicCounter);
 
             topicHeader.addEventListener('click', function() {
-                const targetList = document.querySelector(`[data-topic="${topicCounter}"]`);
+                const targetList = document.querySelector(`[data-topic="${currentTopicId}"] .subtopic-list`);
                 targetList.style.display = targetList.style.display === 'none' ? '' : 'none';
             });
 
@@ -58,6 +57,7 @@ function displayGrid(result) {
         const listItem = document.createElement('li');
         listItem.className = 'subtopic-item';
         listItem.textContent = row.subtopic_title;
+        listItem.setAttribute('data-subtopic', row.subtopic_id);
         list.appendChild(listItem);
     });
 }
