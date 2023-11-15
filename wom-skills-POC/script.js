@@ -1,41 +1,48 @@
-// URL to your CSV file (you will need to replace this with your actual URL)
-    const csv_url = 'http://yourgithubpages.com/path/to/your/csvfile.csv';
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('WOM.csv')
+        .then(response => response.text())
+        .then(csvText => Papa.parse(csvText, {
+            header: true,
+            complete: displayGrid
+        }));
+});
 
-    // Function to fetch and parse CSV data
-    async function fetchAndDisplayCSV(url) {
-        const response = await fetch(url);
-        const csvText = await response.text();
-        const data = parseCSV(csvText);
-        displayData(data);
-    }
+function displayGrid(result) {
+    const data = result.data;
+    const gridContainer = document.getElementById('grid-container');
+    let currentStrand = '';
+    let currentTopic = '';
+    let topicDiv, list;
 
-    // Simple CSV parser (for more complex CSVs consider using a library like PapaParse)
-    function parseCSV(csvText) {
-        const lines = csvText.split('\n');
-        const result = [];
-        const headers = lines[0].split(',');
-
-        for (let i = 1; i < lines.length; i++) {
-            const obj = {};
-            const currentline = lines[i].split(',');
-
-            for (let j = 0; j < headers.length; j++) {
-                obj[headers[j]] = currentline[j];
-            }
-
-            result.push(obj);
+    data.forEach(row => {
+        // Check if the strand has changed
+        if (row.Strand !== currentStrand) {
+            currentStrand = row.Strand;
+            const strandHeader = document.createElement('h2');
+            strandHeader.className = 'strand-header';
+            strandHeader.textContent = currentStrand;
+            gridContainer.appendChild(strandHeader);
         }
 
-        return result; // Array of objects
-    }
+        // Check if the topic has changed
+        if (row.topic_title !== currentTopic) {
+            currentTopic = row.topic_title;
+            topicDiv = document.createElement('div');
+            const topicHeader = document.createElement('h3');
+            topicHeader.className = 'topic-subheader';
+            topicHeader.textContent = currentTopic;
+            topicDiv.appendChild(topicHeader);
 
-    // Function to dynamically generate the grid layout
-    function displayData(data) {
-        const container = document.getElementById('grid-container');
+            // Create a new list for the subtopics
+            list = document.createElement('ul');
+            topicDiv.appendChild(list);
+            gridContainer.appendChild(topicDiv);
+        }
 
-        // Process and display data
-        // You will need to implement this based on your specific CSV structure and desired output
-    }
-
-    // Call the function to fetch and display CSV data
-    fetchAndDisplayCSV(csv_url);
+        // Add subtopic as a list item
+        const listItem = document.createElement('li');
+        listItem.className = 'subtopic-item';
+        listItem.textContent = row.subtopic_title;
+        list.appendChild(listItem);
+    });
+}
