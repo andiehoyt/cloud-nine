@@ -27,7 +27,7 @@ function displayGrid(result) {
 
             strandHeader.addEventListener('click', function() {
                 this.classList.toggle("active");
-                strandContent.style.display = strandContent.style.display === 'none' ? 'block' : 'none';
+                strandContent.style.display = strandContent.style.display === 'none' ? '' : 'none';
             });
 
             gridContainer.appendChild(strandHeader);
@@ -49,7 +49,7 @@ function displayGrid(result) {
 
             topicHeader.addEventListener('click', function() {
                 this.classList.toggle("active");
-                list.style.display = list.style.display === 'none' ? 'block' : 'none';
+                list.style.display = list.style.display === 'none' ? '' : 'none';
             });
 
             topicDiv.appendChild(topicHeader);
