@@ -11,7 +11,7 @@ function displayGrid(result) {
     const data = result.data;
     const gridContainer = document.getElementById('grid-container');
     let currentStrand = '';
-    let currentTopicId = 0;
+    let currentTopicId = '';
 
     data.forEach(row => {
         if (row.Strand !== currentStrand) {
@@ -22,7 +22,6 @@ function displayGrid(result) {
 
             const strandContent = document.createElement('div');
             strandContent.className = 'content';
-
             strandHeader.addEventListener('click', function() {
                 strandContent.style.display = strandContent.style.display === 'none' ? '' : 'none';
             });
@@ -43,7 +42,6 @@ function displayGrid(result) {
 
             const list = document.createElement('ul');
             list.className = 'subtopic-list';
-
             topicHeader.addEventListener('click', function() {
                 const targetList = document.querySelector(`[data-topic="${currentTopicId}"] .subtopic-list`);
                 targetList.style.display = targetList.style.display === 'none' ? '' : 'none';
@@ -57,7 +55,6 @@ function displayGrid(result) {
         const listItem = document.createElement('li');
         listItem.className = 'subtopic-item';
         listItem.textContent = row.subtopic_title;
-        listItem.setAttribute('data-subtopic', row.subtopic_id);
         list.appendChild(listItem);
     });
 }
