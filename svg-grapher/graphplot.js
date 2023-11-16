@@ -242,3 +242,30 @@ const axisDefinitions = {
     document.execCommand('copy');
   });
   
+  // Function to generate and display SVG
+function generateAndDisplaySVG() {
+    // Replace this with your code to generate the SVG content
+    const svgContent = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="40" /></svg>';
+
+    // Display the SVG content in the container
+    const svgContainer = document.getElementById('svgContainer');
+    svgContainer.innerHTML = svgContent;
+
+    // Enable the download button
+    const downloadButton = document.getElementById('downloadButton');
+    downloadButton.addEventListener('click', () => {
+        // Create a Blob from the SVG content
+        const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+
+        // Create a download link
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'graph.svg';
+
+        // Trigger the download
+        a.click();
+    });
+}
+
+// Call the function to generate and display SVG
+generateAndDisplaySVG();
