@@ -1,5 +1,5 @@
 // Import the generateSVG function from graphplot..js
-const generateSVG = require('./graphplot.js');
+const generateSVG = require('graphplot.js');
 
 // Get the SVG content using the generateSVG function
 const svgContent = generateSVG();
