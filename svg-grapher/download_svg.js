@@ -9,9 +9,7 @@ const downloadButton = document.getElementById('downloadButton');
 
 // Add a click event listener to trigger the download
 downloadButton.addEventListener('click', () => {
-    // Get the SVG content you want to download (replace with your actual SVG content)
-    const svgContent = generateSVG();
-
+    
     // Create a Blob from the SVG content
     const blob = new Blob([svgContent], { type: 'image/svg+xml' });
 
