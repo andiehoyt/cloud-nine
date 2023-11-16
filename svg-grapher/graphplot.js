@@ -1,7 +1,3 @@
-// svgGenerator.js
-
-function generateSVG() {
-
 // Change these numbers to define the axes of the graph
 const axisDefinitions = {
     x: {
@@ -235,6 +231,14 @@ const axisDefinitions = {
       point.setLabel(p[3]);
     }
   });
-}
-// Export the generateSVG function
-module.exports = generateSVG;
+  // texts.forEach(text => {
+  //   board.create('text', text, { fontsize: 16 });
+  // });
+  const svg = new XMLSerializer().serializeToString(board.renderer.svgRoot);
+  const textArea = document.getElementById('textarea');
+  textArea.value = svg;
+  document.getElementById('copy').addEventListener('click', event => {
+    textArea.select();
+    document.execCommand('copy');
+  });
+  
