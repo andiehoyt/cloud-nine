@@ -235,16 +235,6 @@ const axisDefinitions = {
       point.setLabel(p[3]);
     }
   });
-  // texts.forEach(text => {
-  //   board.create('text', text, { fontsize: 16 });
-  // });
-  const svg = new XMLSerializer().serializeToString(board.renderer.svgRoot);
-  const textArea = document.getElementById('textarea');
-  textArea.value = svg;
-  document.getElementById('copy').addEventListener('click', event => {
-    textArea.select();
-    document.execCommand('copy');
-  });
 }
 // Export the generateSVG function
 module.exports = generateSVG;
