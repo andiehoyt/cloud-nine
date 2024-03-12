@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSV to Markdown Converter</title>
+<script>
+function convertTsvToMarkdown(tsv) {
+    let markdown = "";
+    let lines = tsv.trim().split('\n').map(line => line.split('\t').map(cell => cell.trim()));
+
+    let currentCountry = null;
+    let currentTextbook = null;
+    let currentTopic = null; // Added to track the current topic
+
+    // Skip header if present
+    const header = lines[0];
+    const hasHeader = header.includes("Country");
+    if (hasHeader) lines.shift();
+
+    lines.forEach(([country, textbook, topic, subtopic, count, link], index) => {
+        // Handle country change
+        if (country !== currentCountry) {
+            markdown += `## ${country}\n`;
+            currentCountry = country;
+            currentTextbook = null; // Reset textbook for new country
+            currentTopic = null; // Reset topic for new country
+        }
+
+        // Handle textbook change
+        if (textbook !== currentTextbook) {
+            markdown += `### ${textbook}\n`;
+            currentTextbook = textbook;
+            currentTopic = null; // Reset topic for new textbook
+        }
+
+        // Include topic title conditionally based on "skill" in textbook title and ensure it only appears once
+        const includeTopic = textbook.toLowerCase().includes("skill");
+        if (includeTopic && topic && topic !== currentTopic) {
+            markdown += `#### ${topic}\n`;
+            currentTopic = topic;
+        }
+
+        // Pluralization for problem count
+        const problemText = (count === '1' ? "Problem" : "Problems");
+        markdown += `- [${subtopic}](${link}) (${count} New ${problemText})\n`;
+    });
+
+    return markdown;
+}
+
+function handleConvert() {
+    const tsvInput = document.getElementById('tsvInput').value;
+    const markdownOutput = convertTsvToMarkdown(tsvInput);
+    document.getElementById('markdownOutput').value = markdownOutput;
+}
+</script>
+</head>
+<body>
+<h1>TSV to Markdown Converter</h1>
+<textarea id="tsvInput" rows="10" cols="50" placeholder="Paste TSV here"></textarea><br>
+<button onclick="handleConvert()">Convert to Markdown</button><br>
+<textarea id="markdownOutput" rows="10" cols="50" placeholder="Markdown output will appear here"></textarea>
+</body>
+</html>
