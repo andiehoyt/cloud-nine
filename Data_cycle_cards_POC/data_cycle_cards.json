@@ -1,0 +1,553 @@
+{
+  "cards": [
+    {
+      "category": "Formulate Questions",
+      "grade": 6,
+      "dataType": "Categorical",
+      "front": "What percentage of ________ prefer ________?",
+      "back": {
+        "example": "What percentage of students prefer soccer, basketball, or baseball as their favorite sport?",
+        "variations": ["What proportion...", "What fraction..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 6,
+      "dataType": "Categorical",
+      "front": "What proportion of ________ are ________?",
+      "back": {
+        "example": "What proportion of students are involved in after-school clubs?",
+        "variations": ["What fraction...", "What percentage..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 6,
+      "dataType": "Categorical",
+      "front": "Which ________ do ________ prefer?",
+      "back": {
+        "example": "Which social media platform do students prefer?",
+        "variations": ["What type of...", "Which kind of..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 6,
+      "dataType": "Numerical",
+      "front": "How many ________ are in ________?",
+      "back": {
+        "example": "How many hours do students spend on homework each week?",
+        "variations": ["How much time...", "How often..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 6,
+      "dataType": "Categorical",
+      "front": "What type of ________ is most common among ________?",
+      "back": {
+        "example": "What type of pet is most common among students?",
+        "variations": ["What kind of...", "Which category of..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 7,
+      "dataType": "Numerical",
+      "front": "How often do ________ ________?",
+      "back": {
+        "example": "How often do students exercise each week?",
+        "variations": ["How frequently...", "What is the frequency of..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 7,
+      "dataType": "Numerical",
+      "front": "What is the average ________ of ________?",
+      "back": {
+        "example": "What is the average number of hours students sleep each night?",
+        "variations": ["What is the mean...", "What is the typical..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 7,
+      "dataType": "Numerical",
+      "front": "What is the total number of ________ in ________?",
+      "back": {
+        "example": "What is the total number of books read by students in a month?",
+        "variations": ["What is the sum...", "How many in total..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 7,
+      "dataType": "Categorical",
+      "front": "What proportion of ________ is ________?",
+      "back": {
+        "example": "What proportion of the school's population is involved in sports?",
+        "variations": ["What fraction...", "What percentage..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 8,
+      "dataType": "Bivariate",
+      "front": "What is the relationship between ________ and ________?",
+      "back": {
+        "example": "What is the relationship between study time and test scores?",
+        "variations": ["How does ________ affect ________?", "Is there a correlation between..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 8,
+      "dataType": "Bivariate",
+      "front": "How does ________ vary with ________?",
+      "back": {
+        "example": "How does screen time vary with grades?",
+        "variations": ["What is the effect of...", "Is there a pattern between..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 8,
+      "dataType": "Bivariate",
+      "front": "Is there a difference in ________ between ________ and ________?",
+      "back": {
+        "example": "Is there a difference in test scores between boys and girls?",
+        "variations": ["How does ________ compare between...", "Is there a significant difference..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": 8,
+      "dataType": "Bivariate",
+      "front": "What trend can be observed between ________ and ________?",
+      "back": {
+        "example": "What trend can be observed between weather and attendance rates?",
+        "variations": ["What pattern...", "Is there a trend..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 1",
+      "dataType": "Bivariate",
+      "front": "What is the relationship between ________ and ________?",
+      "back": {
+        "example": "What is the relationship between number of followers and number of posts?",
+        "variations": ["How does ________ affect ________?", "Is there a correlation between..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 1",
+      "dataType": "Bivariate",
+      "front": "Does ________ influence ________?",
+      "back": {
+        "example": "Does the amount of homework influence test scores?",
+        "variations": ["Does ________ impact...", "How does ________ affect..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 1",
+      "dataType": "Bivariate",
+      "front": "How does ________ correlate with ________?",
+      "back": {
+        "example": "How does exercise correlate with overall health?",
+        "variations": ["What is the correlation between...", "Is there a relationship between..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 1",
+      "dataType": "Bivariate",
+      "front": "What is the effect of ________ on ________?",
+      "back": {
+        "example": "What is the effect of sleep on academic performance?",
+        "variations": ["How does ________ impact...", "What influence does ________ have on..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 2",
+      "dataType": "Bivariate",
+      "front": "What is the pattern in ________ over ________?",
+      "back": {
+        "example": "What is the pattern in temperature changes over a year?",
+        "variations": ["What trend...", "How does ________ change over..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 2",
+      "dataType": "Bivariate",
+      "front": "How does ________ compare to ________?",
+      "back": {
+        "example": "How does the height of professional basketball players compare to players from fifty years ago?",
+        "variations": ["What is the difference between...", "How do ________ and ________ compare..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 2",
+      "dataType": "Bivariate",
+      "front": "What relationship exists between ________ and ________?",
+      "back": {
+        "example": "What relationship exists between income level and education?",
+        "variations": ["Is there a relationship between...", "How does ________ relate to..."]
+      }
+    },
+    {
+      "category": "Formulate Questions",
+      "grade": "Algebra 2",
+      "dataType": "Numerical",
+      "front": "What is the distribution of ________ among ________?",
+      "back": {
+        "example": "What is the distribution of ages among the students in the school?",
+        "variations": ["How is ________ distributed...", "What is the range of..."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": "All Grades",
+      "dataType": ["Categorical", "Numerical", "Bivariate"],
+      "front": "Conduct a Survey",
+      "back": {
+        "example": "Survey your classmates to find out their favorite school subject.",
+        "tips": ["Keep questions clear and concise.", "Make sure to survey a diverse group to get a representative sample.", "Use multiple-choice questions for easier data analysis."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": "All Grades",
+      "dataType": ["Numerical", "Bivariate"],
+      "front": "Conduct an Experiment",
+      "back": {
+        "example": "Conduct an experiment to see how different amounts of sunlight affect plant growth.",
+        "tips": ["Define your variables clearly.", "Control other variables to ensure reliable results.", "Repeat the experiment multiple times to ensure accuracy."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": "All Grades",
+      "dataType": ["Categorical", "Numerical", "Bivariate"],
+      "front": "Acquire Data from Trusted Sources",
+      "back": {
+        "example": "Use data from the United States Census Bureau to study population trends.",
+        "tips": ["Verify the credibility of the source.", "Check for the most recent data available.", "Make sure the data is relevant to your research question."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": [6, 7, 8],
+      "dataType": ["Categorical", "Numerical"],
+      "front": "Conduct an Observation",
+      "back": {
+        "example": "Observe and record how many students use their phones during lunchtime.",
+        "tips": ["Decide on a clear definition of what you are observing.", "Choose a suitable location and time for your observations.", "Record your observations systematically."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": "All Grades",
+      "dataType": ["Numerical", "Bivariate"],
+      "front": "Use Existing Data Sets",
+      "back": {
+        "example": "Use climate data from NOAA to analyze weather patterns.",
+        "tips": ["Identify the data sets that are most relevant to your question.", "Ensure you understand the variables and how they were measured.", "Use data sets that are comprehensive and up-to-date."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": "All Grades",
+      "dataType": ["Categorical", "Numerical", "Bivariate"],
+      "front": "Conduct Interviews",
+      "back": {
+        "example": "Interview teachers to gather their opinions on new school policies.",
+        "tips": ["Prepare open-ended questions to get detailed responses.", "Record the interviews for accuracy.", "Ensure the interviewees feel comfortable and respected."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": "All Grades",
+      "dataType": ["Numerical"],
+      "front": "Perform a Measurement",
+      "back": {
+        "example": "Measure the height of plants in a garden to study growth patterns.",
+        "tips": ["Use accurate and calibrated instruments.", "Take multiple measurements to ensure consistency.", "Record the measurements precisely."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": [7, 8, "Algebra 1", "Algebra 2"],
+      "dataType": ["Categorical", "Numerical", "Bivariate"],
+      "front": "Online Surveys and Polls",
+      "back": {
+        "example": "Create an online poll to find out the most popular social media platform among teenagers.",
+        "tips": ["Choose a user-friendly survey platform.", "Ensure anonymity to get honest responses.", "Share the survey link widely to increase participation."]
+      }
+    },
+    {
+      "category": "Collect or Acquire Data",
+      "grade": "All Grades",
+      "dataType": ["Categorical", "Numerical", "Bivariate"],
+      "front": "Use Historical Data",
+      "back": {
+        "example": "Use historical temperature data to study climate change.",
+        "tips": ["Verify the accuracy and completeness of historical records.", "Consider the context in which the data was collected.", "Use historical data to compare with current data for trend analysis."]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 6,
+      "dataType": "Categorical",
+      "front": "Circle Graph (Pie Chart)",
+      "back": {
+        "example": "Favorite fruit of students (e.g., apples, bananas, oranges)",
+        "tips": ["Ensure the total represents 100%", "Include a key and percentage labels for clarity"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 6,
+      "dataType": "Categorical",
+      "front": "Bar Graph",
+      "back": {
+        "example": "Number of students in each grade level",
+        "tips": ["Use consistent spacing between bars", "Label axes clearly"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 6,
+      "dataType": "Univariate",
+      "front": "Dot Plot",
+      "back": {
+        "example": "Number of books read by students",
+        "tips": ["Ensure dots are evenly spaced", "Label axes and provide a title"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 6,
+      "dataType": "Categorical",
+      "front": "Pictograph",
+      "back": {
+        "example": "Favorite fruits of students",
+        "tips": ["Use clear and consistent symbols", "Include a key to explain what each symbol represents"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 7,
+      "dataType": "Numerical",
+      "front": "Histogram",
+      "back": {
+        "example": "Number of hours students spend on homework per week",
+        "tips": ["Ensure bins are of equal width", "Label axes and provide a title"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 7,
+      "dataType": "Numerical",
+      "front": "Line Graph",
+      "back": {
+        "example": "Temperature changes over a week",
+        "tips": ["Connect data points with straight lines", "Label axes and include units of measurement"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 8,
+      "dataType": "Univariate",
+      "front": "Box Plot",
+      "back": {
+        "example": "Test scores distribution",
+        "tips": ["Clearly mark median and quartiles", "Highlight outliers with dots"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 8,
+      "dataType": "Bivariate",
+      "front": "Scatter Plot",
+      "back": {
+        "example": "Relationship between study time and test scores",
+        "tips": ["Label axes clearly", "Consider adding a line of best fit"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 8,
+      "dataType": "Univariate",
+      "front": "Dot Plot",
+      "back": {
+        "example": "Number of books read by students",
+        "tips": ["Ensure dots are evenly spaced", "Label axes and provide a title"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": 8,
+      "dataType": "Categorical",
+      "front": "Pictograph",
+      "back": {
+        "example": "Favorite fruits of students",
+        "tips": ["Use clear and consistent symbols", "Include a key to explain what each symbol represents"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": "Algebra 1",
+      "dataType": "Univariate",
+      "front": "Stem-and-Leaf Plot",
+      "back": {
+        "example": "Students' ages",
+        "tips": ["Split stems for better readability if needed", "Include a key to interpret the plot"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": "Algebra 1",
+      "dataType": "Univariate",
+      "front": "Dot Plot",
+      "back": {
+        "example": "Number of books read by students",
+        "tips": ["Ensure dots are evenly spaced", "Label axes and provide a title"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": "Algebra 2",
+      "dataType": "Continuous",
+      "front": "Smooth Curve",
+      "back": {
+        "example": "Normal distribution of test scores",
+        "tips": ["Fit the curve to the data distribution", "Use software for accurate curve fitting"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": "Algebra 2",
+      "dataType": "Bivariate",
+      "front": "Two-Way Table",
+      "back": {
+        "example": "Preference of sports by gender",
+        "tips": ["Ensure clear row and column labels", "Include totals for better interpretation"]
+      }
+    },
+    {
+      "category": "Organize & Represent Data",
+      "grade": "Geometry",
+      "dataType": "Categorical",
+      "front": "Venn Diagram",
+      "back": {
+        "example": "Survey data about preferences or characteristics",
+        "tips": ["Represent each data set with a circle", "Fill the non-overlapping portions with unique characteristics", "Fill the overlapping portions with shared characteristics"]
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "What patterns do you notice in the data?",
+      "back": {
+        "example": "If you observe a consistent increase in scores with more study hours, you might conclude, 'Students who study more tend to have higher scores.'"
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "What does the data tell us about the relationship between the variables?",
+      "back": {
+        "example": "If higher temperatures are associated with increased ice cream sales, you might say, 'There is a positive correlation between temperature and ice cream sales.'"
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "Are there any outliers in the data?",
+      "back": {
+        "example": "If one student scored much lower than the rest, you might ask, 'Why did this student score significantly lower than their peers?'"
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "How does the data support or refute your initial hypothesis?",
+      "back": {
+        "example": "If you hypothesized that students with more sleep would have better grades, and the data supports this, you might conclude, 'The data supports the hypothesis that more sleep leads to better grades.'"
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "What conclusions can you draw from the data?",
+      "back": {
+        "example": "The data suggests that exercise is positively correlated with academic performance, indicating that students who exercise regularly tend to have higher grades."
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "What are the limitations of your data?",
+      "back": {
+        "example": "The sample size was small, so the results may not be representative of the entire student population."
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "What recommendations can you make based on the data?",
+      "back": {
+        "example": "Based on the data, I recommend that students should aim for at least 8 hours of sleep per night to improve their academic performance."
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "How would you visually represent this data to communicate your findings?",
+      "back": {
+        "example": "A bar graph would clearly show the differences in test scores between students who study different amounts of time."
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "What new questions does this data raise?",
+      "back": {
+        "example": "If you found that students with more screen time have lower grades, you might ask, 'What types of screen activities are most distracting?'"
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "How could you improve your data collection process in the future?",
+      "back": {
+        "example": "In the future, I would survey a larger group of students to get more reliable results."
+      }
+    },
+    {
+      "category": "Analyze & Communicate Results",
+      "grade": "All Grades",
+      "dataType": "All Types",
+      "front": "What other data would be helpful to better understand the results?",
+      "back": {
+        "example": "Knowing the students' study habits and their access to study resources would help better understand the correlation between study time and grades."
+      }
+    }
+  ]
+}
