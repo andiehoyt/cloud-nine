@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAP Recommended Practice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .instructions {
+            text-align: center;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #00856b;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #006a58;
+        }
+        .recommendations {
+            margin-top: 30px;
+        }
+        .recommendations h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .recommendations ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .recommendations li {
+            background-color: #e8f6f2;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MAP Recommended Practice</h1>
+        <p class="instructions">Use the RIT scores to generate personalized study recommendations.</p>
+
+        <div class="input-group">
+            <label for="operations-score">Operations and Algebraic Thinking:</label>
+            <input type="number" id="operations-score" placeholder="e.g., 160">
+        </div>
+        <div class="input-group">
+            <label for="real-complex-score">The Real and Complex Number Systems:</label>
+            <input type="number" id="real-complex-score" placeholder="e.g., 160">
+        </div>
+        <div class="input-group">
+            <label for="geometry-score">Geometry:</label>
+            <input type="number" id="geometry-score" placeholder="e.g., 160">
+        </div>
+        <div class="input-group">
+            <label for="statistics-score">Statistics and Probability:</label>
+            <input type="number" id="statistics-score" placeholder="e.g., 160">
+        </div>
+
+        <div class="button-container">
+            <button onclick="generateRecommendations()">Show me the recommendations!</button>
+        </div>
+
+        <div class="recommendations" id="recommendations">
+            <h2>Your Recommended Practice</h2>
+            <ul id="recommendation-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Sample data (replace with real data from your file)
+        // Load dataset from external file
+fetch('dataset.json')
+    .then(response => response.json())
+    .then(jsonData => {
+        window.data = jsonData;
+    })
+    .catch(error => console.error('Error loading dataset:', error));
+
+        function generateRecommendations() {
+            const scores = {
+                operations: parseInt(document.getElementById("operations-score").value),
+                realComplex: parseInt(document.getElementById("real-complex-score").value),
+                geometry: parseInt(document.getElementById("geometry-score").value),
+                statistics: parseInt(document.getElementById("statistics-score").value)
+            };
+
+            const recommendationList = document.getElementById("recommendation-list");
+            recommendationList.innerHTML = "";
+
+            for (const [category, score] of Object.entries(scores)) {
+                if (!score) continue;
+
+                const recommendations = data.filter(entry => {
+                    const [low, high] = entry.rit_range.split(" - ").map(Number);
+                    return score >= low && score <= high && entry.category.toLowerCase() === category.toLowerCase();
+                });
+
+                if (recommendations.length > 0) {
+                    const categoryHeader = document.createElement("li");
+                    categoryHeader.innerHTML = `<strong>${category.replace(/([A-Z])/g, ' $1').trim()}:</strong>`;
+                    recommendationList.appendChild(categoryHeader);
+
+                    recommendations.forEach(item => {
+                        item.subtopics.forEach(subtopic => {
+                            const listItem = document.createElement("li");
+                            listItem.innerHTML = `<a href="${subtopic.link}" target="_blank">${subtopic.title}</a>`;
+                            recommendationList.appendChild(listItem);
+                        });
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
