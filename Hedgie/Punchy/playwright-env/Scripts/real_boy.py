@@ -1,3 +1,4 @@
+import csv
 from playwright.sync_api import sync_playwright
 
 def main():
@@ -58,20 +59,37 @@ def main():
         page.goto("https://mathspace.co/debug/skill-set-check-in/curriculum/LanternCurriculum-15")
 
         page.wait_for_load_state("networkidle")  # Wait until no network requests are in progress
+# Example: Verify successful navigation
+        if not page.is_visible("input[placeholder='Outcome IDs']"):
+            print("Failed to load the page. Exiting.")
+            browser.close()
+            return
 
-# Verify specific elements
-        try:
-            # Wait for the input field and button to appear
-            page.wait_for_selector("input[placeholder='Outcome IDs']", timeout=10000)  # 10 seconds
-            page.wait_for_selector("button:has-text('Validate')", timeout=10000)  # Button with 'Validate'
-            
-            # Check if the elements are visible
-            if page.is_visible("input[placeholder='Outcome IDs']") and page.is_visible("button:has-text('Validate')"):
-                print("Page loaded successfully with expected elements.")
-            else:
-                print("Expected elements are not visible.")
-        except Exception as e:
-            print(f"Error during verification: {e}")
+        print("Logged in and ready to process data.")
+
+       # Correctly open and process the CSV file
+        csv_path = r"C:\Users\alano\OneDrive\Documents\GitHub\cloud-nine\Hedgie\Punchy\playwright-env\Scripts\data.csv"
+        with open(csv_path, "r") as file:
+            reader = csv.DictReader(file)  # Initialize CSV reader
+            for row in reader:  # Process rows inside the open block
+                outcome_ids = row["Outcome IDs"]
+                student_id = row["User ID"]
+                percent_correct = float(row["Percent Correct"]) / 100
+
+                # Example: Log details (replace with actual logic)
+                print(f"Processing Outcome IDs: {outcome_ids}, User ID: {student_id}, Percent Correct: {percent_correct}")
+
+                # Perform your Playwright actions here
+                page.fill("input[placeholder='Outcome IDs']", outcome_ids)
+                page.locator("button:has-text('Validate')").nth(0).click()
+                page.wait_for_selector("button:has-text('Fetch Question Previews')")
+                page.fill("input[placeholder='Student ID']", student_id)
+                # Click the second "Validate" button (for Student ID)
+                page.locator("button:has-text('Validate')").nth(1).click()
+                
+                page.click("button:has-text('Start Check-In')")
+                print(f"Navigated to check-in page for {student_id}")
+
         # Close the browser
         browser.close()
 
