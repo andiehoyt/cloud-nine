@@ -1,4 +1,5 @@
 import csv
+import random
 from playwright.sync_api import sync_playwright
 
 def main():
@@ -56,6 +57,7 @@ def main():
 
         # Navigate to the admin dashboard or any authenticated page
         page = context.new_page()
+        page.goto("https://mathspace.co/impersonate/stop")
         page.goto("https://mathspace.co/debug/skill-set-check-in/curriculum/LanternCurriculum-15")
 
         page.wait_for_load_state("networkidle")  # Wait until no network requests are in progress
@@ -74,7 +76,7 @@ def main():
             for row in reader:  # Process rows inside the open block
                 outcome_ids = row["Outcome IDs"]
                 student_id = row["User ID"]
-                percent_correct = float(row["Percent Correct"]) / 100
+                percent_correct = float(row["Percent Correct"])
 
                 # Example: Log details (replace with actual logic)
                 print(f"Processing Outcome IDs: {outcome_ids}, User ID: {student_id}, Percent Correct: {percent_correct}")
@@ -86,9 +88,74 @@ def main():
                 page.fill("input[placeholder='Student ID']", student_id)
                 # Click the second "Validate" button (for Student ID)
                 page.locator("button:has-text('Validate')").nth(1).click()
-                
+
                 page.click("button:has-text('Start Check-In')")
                 print(f"Navigated to check-in page for {student_id}")
+
+                # Step 3: Start Check-In
+                page.click("button:has-text('Start Check-In')")
+                page.wait_for_load_state("networkidle")
+
+
+                # Step 5: Add to Local Storage
+                page.evaluate("""() => {
+                    localStorage.setItem('__lantern:devMode', 'true');
+                }""")
+                page.reload()
+                #page.wait_for_selector("button[aria-label='✗']")  # Wait for Incorrect button to appear
+
+                # Step 6: Answer Questions Based on Probability
+                while True:
+                    # Handle Continue button
+                    try:
+                        if page.is_visible("button.css-19p41nw") or page.is_visible("button:has-text('Continue')"):
+                            print("Continue button detected. Skipping question.")
+                            page.locator("button.css-19p41nw:has-text('Continue')").click()
+                            page.wait_for_load_state("networkidle")
+                            continue
+                    except Exception as e:
+                        print(f"Error handling Continue button: {e}")
+
+                    # Handle Back to Dashboard button
+                    if page.is_visible("button[aria-label='Back to dashboard']"):
+                        print(f"Finished check-in for {student_id}")
+                        print(f"Dashboard URL: {page.url}")
+                        page.click("button[aria-label='Back to dashboard']")
+                        break
+
+                    # Capture Current Question Text
+                    try:
+                        current_question = page.locator("div.css-4lpqgf-makeBodyComponent.e2zo9vh0").text_content()
+                    except Exception as e:
+                        print(f"Error capturing current question: {e}")
+                        continue
+
+                    # Decide Correct or Incorrect Answer
+                    random_value = random.random()  # Generates a value between 0 and 1
+                    print(f"Random Value: {random_value}, Percent Correct: {percent_correct}")
+
+                    if random_value < percent_correct:
+                        print(f"Answering Correct for {student_id}")
+                        locator = page.locator("button[aria-label='✓']")
+                    else:
+                        print(f"Answering Incorrect for {student_id}")
+                        locator = page.locator("button[aria-label='✗']")
+
+                    try:
+                        # Attempt to click the chosen button
+                        locator.click()
+
+                        # Wait for the question number to change
+                        page.wait_for_function(
+                            f"""() => {{
+                                const element = document.querySelector('div.css-4lpqgf-makeBodyComponent.e2zo9vh0');
+                                return element && element.textContent !== '{current_question}';
+                            }}""",
+                            timeout=100  # Adjust timeout as needed
+                        )
+                    except Exception as e:
+                        print(f"Error interacting with button or waiting for the next question: {e}")
+                        continue
 
         # Close the browser
         browser.close()
