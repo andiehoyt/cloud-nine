@@ -1,18 +1,57 @@
 import csv
 import random
+import argparse
 from playwright.sync_api import sync_playwright
 
 def main():
+    # -------------------------
+    # 1. Parse command line arguments
+    # -------------------------
+    parser = argparse.ArgumentParser(description="Run pre- or post-test check-ins.")
+    parser.add_argument("--test_type", choices=["pre", "post"], required=True,
+                        help="Specify whether it's a pre-test or post-test.")
+    parser.add_argument("--test_name", required=True,
+                        help="Specify the test name (e.g., T5). Only rows with this value in the 'Test' column will be run.")
+    parser.add_argument("--csv_path", default=r"C:\Users\alano\OneDrive\Documents\GitHub\cloud-nine\Hedgie\Punchy\playwright-env\Scripts\data.csv",
+                        help="Path to the CSV file.")
+    args = parser.parse_args()
+
+    test_type = args.test_type     # "pre" or "post"
+    test_name = args.test_name     # e.g. "T5"
+    csv_path = args.csv_path
+
+    # -------------------------
+    # 2. Determine which columns to use
+    # -------------------------
+    if test_type == "pre":
+        guid_column = "Pre-Test GUIDs"
+        checkin_id_column = "Pre-Test Check-in ID"
+    else:  # test_type == "post"
+        guid_column = "Post-Test GUIDs"
+        checkin_id_column = "Post-Test Check-in ID"
+
+    # -------------------------
+    # 3. Read all rows from CSV into memory
+    #    We will write back any updated rows to the same file
+    # -------------------------
+    rows = []
+    with open(csv_path, "r", newline="", encoding="utf-8") as infile:
+        reader = csv.DictReader(infile)  # Uses comma as the default delimiter
+        fieldnames = reader.fieldnames
+        for row in reader:
+            rows.append(row)
+
+    # -------------------------
+    # 4. Launch Playwright
+    # -------------------------
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
-
-        # Add cookies and headers to the context
         context = browser.new_context(
             extra_http_headers={
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
                 "Accept-Language": "en-US,en;q=0.9",
-                "X-CSRFToken": "1Xb9iH4SvDhfBU9AMYG3WRnpsvMHWNia",  # Optional if CSRF token is required in headers
+                "X-CSRFToken": "AR8JeLdWskwqQWnenv8g4zVjgAygGcxd",  # If required
             }
         )
 
@@ -20,7 +59,7 @@ def main():
         context.add_cookies([
             {
                 "name": "sessionid",
-                "value": "omg2hbl4xf87xb6ja57qx7yojb60svva",
+                "value": "eokz4ipj21k40migjlx6v33f6gygcq9e",
                 "domain": "mathspace.co",
                 "path": "/",
                 "httpOnly": True,
@@ -28,14 +67,14 @@ def main():
             },
             {
                 "name": "csrftoken",
-                "value": "1Xb9iH4SvDhfBU9AMYG3WRnpsvMHWNia",
+                "value": "AR8JeLdWskwqQWnenv8g4zVjgAygGcxd",
                 "domain": "mathspace.co",
                 "path": "/",
                 "secure": True
             },
             {
                 "name": "cf_clearance",
-                "value": "BN0WNLwcsH9IZ.b3BsuKEjibyvyDrejjdSUez94wB.Y-1736199442-1.2.1.1-WfthXqao1iKVJBDEdm6tX74194UNdl0xw_oz4gZGswkvj5oh_bONsKl7xZLoWzQ1V._r5LYWDpgKQlybyy.gYF1_pJ2QNlMGnuGe.wOfWxgX5iD89.0lwCIHbO8OrDPAy4K6rTg5DesFVmhrdTjn4eG.4MMvRNX7zEx8JYPTZseHcfidVynSznLrHurhdH_h_hhDM.pxj_YQbHwA1mgIPoKRWI0J84QRLbvKGBpuUu.eZOncqt.Jcg8r3eX4e6.C1HUzEawKsXGHfPGBDv3EIcAXasT9WAP6dctffQ9kIbHSDJHUK5NA3l_tqCdauPJUuQ5jlemo6mawhRBcxjfu19Oddk9IPeVSRWXbRIfiS44Diq_HkrOb857bYypvsx2pzRef1D78HeFwbEvFGM8hBw",
+                "value": "5pWgUT174K0z.GzXVvjHr7fbmbt4g.WSkjwL9K3HBiY-1736297879-1.2.1.1-.VGw3jD_ierVR1xUkDP9zYm9fzVJA8AttsYN4CvSB_FFwJlAtvpVewrO31k33cAVp8W8o4iFrVJsrzQ5axdXkIn_Q0rvzKf9Rv0coZMGtaHMZePv7jS2gRYI.txxxu6_T19CtQ9gSMdPJtm2qxHiLBof1Rl4J8GPyOESWZY.OWyubhtSWl1XJ3QUyEZs0CxqqMiEQ_E2E5QFP1V4vnOCFKzQ6PwiVsgtktn2J3x04.Ly2WwnfY_fLAar8MLRtOQytpZyj4trp7DI_IVx2l3ESSC6qgeivFHXQwn1KdlDSpgSyFyBVuhvy3Vt5kKeP5D9nmtHGXLrewEHszOvcLWIOcIBw2qhOqf4jppLneSTYoOVaORp8qAawRT0fhoWc_TnCSdGRdsXl3SHpS0GkApaNw",
                 "domain": "mathspace.co",
                 "path": "/",
                 "httpOnly": True,
@@ -55,13 +94,14 @@ def main():
             }
         ])
 
-        # Navigate to the admin dashboard or any authenticated page
         page = context.new_page()
+
+        # Example: Navigating somewhere to ensure session is active
         page.goto("https://mathspace.co/impersonate/stop")
         page.goto("https://mathspace.co/debug/skill-set-check-in/curriculum/LanternCurriculum-15")
+        page.wait_for_load_state("networkidle")
 
-        page.wait_for_load_state("networkidle")  # Wait until no network requests are in progress
-# Example: Verify successful navigation
+        # Optional: verify if the page loaded properly
         if not page.is_visible("input[placeholder='Outcome IDs']"):
             print("Failed to load the page. Exiting.")
             browser.close()
@@ -69,96 +109,127 @@ def main():
 
         print("Logged in and ready to process data.")
 
-       # Correctly open and process the CSV file
-        csv_path = r"C:\Users\alano\OneDrive\Documents\GitHub\cloud-nine\Hedgie\Punchy\playwright-env\Scripts\data.csv"
-        with open(csv_path, "r") as file:
-            reader = csv.DictReader(file)  # Initialize CSV reader
-            for row in reader:  # Process rows inside the open block
-                outcome_ids = row["Outcome IDs"]
-                student_id = row["User ID"]
+        # -------------------------
+        # 5. Process each row
+        #    - Only handle rows matching the user-specified test name
+        #    - Use pre-/post- columns for GUIDs
+        #    - Record the first question URL to the appropriate check-in ID column
+        # -------------------------
+        for row in rows:
+            if row["Test"] != test_name:
+                # Skip rows whose 'Test' column doesn't match the requested test
+                continue
+
+            outcome_guids = row.get(guid_column, "").strip()
+            if not outcome_guids:
+                print(f"Row ID {row['ID']} has no GUIDs in column '{guid_column}'. Skipping.")
+                continue
+
+            # Convert Percent Correct to float
+            try:
                 percent_correct = float(row["Percent Correct"])
+            except ValueError:
+                print(f"Invalid Percent Correct in row ID {row['ID']}. Skipping.")
+                continue
 
-                # Example: Log details (replace with actual logic)
-                print(f"Processing Outcome IDs: {outcome_ids}, User ID: {student_id}, Percent Correct: {percent_correct}")
+            # Fill outcome IDs
+            page.fill("input[placeholder='Outcome IDs']", outcome_guids)
+            page.locator("button:has-text('Validate')").nth(0).click()
+            page.wait_for_selector("button:has-text('Fetch Question Previews')")
 
-                # Perform your Playwright actions here
-                page.fill("input[placeholder='Outcome IDs']", outcome_ids)
-                page.locator("button:has-text('Validate')").nth(0).click()
-                page.wait_for_selector("button:has-text('Fetch Question Previews')")
-                page.fill("input[placeholder='Student ID']", student_id)
-                # Click the second "Validate" button (for Student ID)
-                page.locator("button:has-text('Validate')").nth(1).click()
+            # Fill Student ID — adjust as needed (e.g., row["USERNAME"] if you prefer)
+            student_id = row["ID"]
+            page.fill("input[placeholder='Student ID']", student_id)
 
-                page.click("button:has-text('Start Check-In')")
-                print(f"Navigated to check-in page for {student_id}")
+            # Click the second "Validate" button (for Student ID)
+            page.locator("button:has-text('Validate')").nth(1).click()
 
-                # Step 3: Start Check-In
-                page.click("button:has-text('Start Check-In')")
-                page.wait_for_load_state("networkidle")
+            # Click "Start Check-In"
+            page.click("button:has-text('Start Check-In')")
+            page.wait_for_load_state("networkidle")
 
+            # Capture the first question page URL
+            first_question_url = page.url
+            print(f"First question URL for row ID {row['ID']}: {first_question_url}")
 
-                # Step 5: Add to Local Storage
-                page.evaluate("""() => {
-                    localStorage.setItem('__lantern:devMode', 'true');
-                }""")
-                page.reload()
-                #page.wait_for_selector("button[aria-label='✗']")  # Wait for Incorrect button to appear
+            # Store that URL in the CSV row
+            row[checkin_id_column] = first_question_url
 
-                # Step 6: Answer Questions Based on Probability
-                while True:
-                    # Handle Continue button
-                    try:
-                        if page.is_visible("button.css-19p41nw") or page.is_visible("button:has-text('Continue')"):
-                            print("Continue button detected. Skipping question.")
-                            page.locator("button.css-19p41nw:has-text('Continue')").click()
-                            page.wait_for_load_state("networkidle")
-                            continue
-                    except Exception as e:
-                        print(f"Error handling Continue button: {e}")
+            # Turn on dev mode in localStorage
+            page.evaluate("""() => {
+                localStorage.setItem('__lantern:devMode', 'true');
+            }""")
+            page.reload()
+            page.wait_for_load_state("networkidle")
 
-                    # Handle Back to Dashboard button
-                    if page.is_visible("button[aria-label='Back to dashboard']"):
-                        print(f"Finished check-in for {student_id}")
-                        print(f"Dashboard URL: {page.url}")
-                        page.click("button[aria-label='Back to dashboard']")
-                        break
-
-                    # Capture Current Question Text
-                    try:
-                        current_question = page.locator("div.css-4lpqgf-makeBodyComponent.e2zo9vh0").text_content()
-                    except Exception as e:
-                        print(f"Error capturing current question: {e}")
+            # -------------------------
+            # 6. Answer questions
+            # -------------------------
+            while True:
+                # Handle "Continue" button
+                try:
+                    if page.is_visible("button:has-text('Continue')"):
+                        print("Continue button detected. Skipping question.")
+                        page.click("button:has-text('Continue')")
+                        page.wait_for_load_state("networkidle")
                         continue
+                except Exception as e:
+                    print(f"Error handling Continue button: {e}")
 
-                    # Decide Correct or Incorrect Answer
-                    random_value = random.random()  # Generates a value between 0 and 1
-                    print(f"Random Value: {random_value}, Percent Correct: {percent_correct}")
+                # Handle "Back to dashboard" button => break out if done
+                if page.is_visible("button:has-text('Back to dashboard')"):
+                    print(f"Finished check-in for student ID {student_id}")
+                    page.click("button:has-text('Back to dashboard')")
+                    break
 
-                    if random_value < percent_correct:
-                        print(f"Answering Correct for {student_id}")
-                        locator = page.locator("button[aria-label='✓']")
-                    else:
-                        print(f"Answering Incorrect for {student_id}")
-                        locator = page.locator("button[aria-label='✗']")
+                # Capture current question text
+                try:
+                    current_question = page.locator("div.css-4lpqgf-makeBodyComponent.e2zo9vh0").text_content()
+                except Exception as e:
+                    print(f"Error capturing current question: {e}")
+                    continue
 
-                    try:
-                        # Attempt to click the chosen button
-                        locator.click()
+                # Decide correct or incorrect
+                random_value = random.random()
+                print(f"Random Value: {random_value}, Percent Correct: {percent_correct}")
+                if random_value < percent_correct:
+                    print(f"Answering Correct for student ID {student_id}")
+                    locator = page.locator("button[aria-label='✓']")
+                else:
+                    print(f"Answering Incorrect for student ID {student_id}")
+                    locator = page.locator("button[aria-label='✗']")
 
-                        # Wait for the question number to change
-                        page.wait_for_function(
-                            f"""() => {{
-                                const element = document.querySelector('div.css-4lpqgf-makeBodyComponent.e2zo9vh0');
-                                return element && element.textContent !== '{current_question}';
-                            }}""",
-                            timeout=100  # Adjust timeout as needed
-                        )
-                    except Exception as e:
-                        print(f"Error interacting with button or waiting for the next question: {e}")
-                        continue
+                try:
+                    # Attempt to click
+                    locator.click()
 
-        # Close the browser
+                    # Wait for the question number/text to change
+                    page.wait_for_function(
+                        f"""() => {{
+                            const element = document.querySelector('div.css-4lpqgf-makeBodyComponent.e2zo9vh0');
+                            return element && element.textContent !== '{current_question}';
+                        }}""",
+                        timeout=10000
+                    )
+                except Exception as e:
+                    print(f"Error with answer button or waiting for next question: {e}")
+                    continue
+
+        # -------------------------
+        # 7. After processing all rows, write updates back to CSV
+        # -------------------------
         browser.close()
+
+    # If the CSV didn’t include the check-in ID columns initially, make sure to add them.
+    if checkin_id_column not in fieldnames:
+        fieldnames.append(checkin_id_column)
+
+    # Write the updated rows back to the same CSV
+    with open(csv_path, "w", newline="", encoding="utf-8") as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
 
 if __name__ == "__main__":
     main()
