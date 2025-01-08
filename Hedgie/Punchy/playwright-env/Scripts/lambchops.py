@@ -43,13 +43,13 @@ def main():
                         print(f"Password change page detected for {userid}.")
                         password_fields = page.query_selector_all("input.block-tracking.input_r9ge0j[type='password']")
                         for field in password_fields:
-                            field.fill(password)  # Fill the password fields with the same password
-                        page.click("button.css-du7gh0[aria-label='Change password']")  # Click the change password button
+                            field.fill('insecure')  # Fill the password fields with the new password
+                        page.click("button:has-text('Change password')")  # Click the change password button
                         page.wait_for_load_state("networkidle")
 
                     # Step 2: Handle onboarding page
-                    if page.is_visible("button.css-mbw08h[aria-label='Continue']"):
-                        page.click("button.css-mbw08h[aria-label='Continue']")
+                    if page.is_visible("button:has-text('Continue')"):
+                        page.click("button:has-text('Continue')")
 
                         # Check for additional onboarding page
                         if page.url == "https://mathspace.co/student/onboarding/grade":
@@ -58,8 +58,8 @@ def main():
                             grade_selector = f"button:has-text('{grade}')"  # Match button with text equal to grade
                             page.wait_for_selector(grade_selector, state="visible")
                             page.click(grade_selector)  # Click the grade button
-                            page.wait_for_selector("button.css-mbw08h[aria-label='Continue']", state="visible")  # Wait for the continue button
-                            page.click("button.css-mbw08h[aria-label='Continue']")
+                            page.wait_for_selector("button:has-text('Continue')", state="visible")  # Wait for the continue button
+                            page.click("button:has-text('Continue')")
 
                 except Exception as e:
                     print(f"Error encountered with userid {userid}: {e}")
